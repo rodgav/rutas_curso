@@ -34,4 +34,3 @@ class _MapaPageState extends State<MapaPage> {
     return Center(child: Text('${state.ubicacion?.latitude} ${state.ubicacion?.longitude}'));
   }
 }
-//AIzaSyDr0HNL0jEReDgKqF58Zy_q-FifIJiHbRg
