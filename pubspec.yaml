@@ -32,7 +32,7 @@ dependencies:
   permission_handler:
   flutter_bloc:
   google_maps_flutter:
-  dio: ^4.0.0-prev3
+  dio:
   animate_do:
 
 

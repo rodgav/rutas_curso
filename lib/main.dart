@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rutas_curso/bloc/busqueda/busqueda_bloc.dart';
+import 'package:rutas_curso/bloc/mapa/mapa_bloc.dart';
 import 'package:rutas_curso/pages/acceso_gps.dart';
 import 'package:rutas_curso/pages/loading.dart';
 import 'package:rutas_curso/pages/mapa.dart';
@@ -14,7 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => MiUbicacionBloc())],
+      providers: [
+        BlocProvider(create: (_) => MiUbicacionBloc()),
+        BlocProvider(create: (_) => MapaBloc()),
+        BlocProvider(create: (_) => BusquedaBloc()),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
