@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rutas_curso/bloc/mapa/mapa_bloc.dart';
 import 'package:rutas_curso/bloc/mi_ubicacion/mi_ubicacion_bloc.dart';
+import 'package:rutas_curso/services/traffic_service.dart';
 import 'package:rutas_curso/widgets/btn_float.dart';
 import 'package:rutas_curso/widgets/marcador_manual.dart';
 import 'package:rutas_curso/widgets/searchBar.dart';
@@ -23,6 +24,7 @@ class _MapaPageState extends State<MapaPage> {
   void dispose() {
     // TODO: implement dispose
     context.read<MiUbicacionBloc>().cancelarSeguimiento();
+    TrafficServices().dispose();
     super.dispose();
   }
 
@@ -42,8 +44,7 @@ class _MapaPageState extends State<MapaPage> {
           ),
         ),
         floatingActionButton: BlocBuilder<MapaBloc, MapaState>(
-            builder: (_, state) =>
-                Column(
+            builder: (_, state) => Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     BtnFloat(
@@ -78,7 +79,6 @@ class _MapaPageState extends State<MapaPage> {
     if (!state.existeUbicacion) return Center(child: Text('Ubicando...'));
     final cameraPosition = CameraPosition(target: state.ubicacion!, zoom: 15);
 
-
     return BlocBuilder<MapaBloc, MapaState>(
       builder: (_, __) {
         return GoogleMap(
@@ -88,6 +88,7 @@ class _MapaPageState extends State<MapaPage> {
           myLocationButtonEnabled: false,
           onMapCreated: mapaBloc.initMapa,
           polylines: mapaBloc.state.polilynes.values.toSet(),
+          markers: mapaBloc.state.markers.values.toSet(),
           onCameraMove: (cameraPosition) {
             mapaBloc.add(OnModioMapa(cameraPosition.target));
           },

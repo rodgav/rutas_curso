@@ -94,6 +94,31 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
         this._miRutaDestino.copyWith(pointsParam: event.rutaCoordenadas);
     final currentPolylines = state.polilynes;
     currentPolylines['mi_ruta_destino'] = this._miRutaDestino;
-    yield state.copyWhit(polilynes: currentPolylines);
+
+    final markerInicio = Marker(
+        markerId: MarkerId('inicio'),
+        position: event.rutaCoordenadas.first,
+        infoWindow: InfoWindow(
+            title: 'Mi ubicación',
+            snippet:
+                'Duración de recorrido: ${(event.duration / 60).floor()} minutos'));
+    double kilometros = event.distancia / 1000;
+    kilometros = (kilometros * 100).floor().toDouble();
+    kilometros = kilometros / 100;
+    final markerFinal = Marker(
+        markerId: MarkerId('final'),
+        position: event.rutaCoordenadas.last,
+        infoWindow: InfoWindow(
+            title: event.nombreDestino, snippet: 'Distancia: $kilometros km'));
+    final newMarkers = {...state.markers};
+    newMarkers['inicio'] = markerInicio;
+    newMarkers['final'] = markerFinal;
+
+    Future.delayed(Duration(milliseconds: 300)).then((value) {
+      _googleMapController!.showMarkerInfoWindow(MarkerId('inicio'));
+      _googleMapController!.showMarkerInfoWindow(MarkerId('final'));
+    });
+
+    yield state.copyWhit(polilynes: currentPolylines, markers: newMarkers);
   }
 }
