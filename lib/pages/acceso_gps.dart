@@ -22,7 +22,6 @@ class _AccesoGpsPageState extends State<AccesoGpsPage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state)async {
-      debugPrint('state $state');
       if(state == AppLifecycleState.resumed){
         if(await Permission.location.isGranted){
           Navigator.pushReplacementNamed(context, '/');

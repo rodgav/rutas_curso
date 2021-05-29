@@ -14,7 +14,7 @@
 
 
     <application
-        android:label="rutas_curso"
+        android:label="Rutas"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

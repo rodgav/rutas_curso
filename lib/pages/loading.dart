@@ -25,7 +25,6 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    debugPrint('state $state');
     if (state == AppLifecycleState.resumed) {
       if (await Geolocator.isLocationServiceEnabled()) {
         Navigator.pushReplacement(

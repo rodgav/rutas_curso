@@ -77,6 +77,9 @@ class _MapaPageState extends State<MapaPage> {
 
   Widget crearMapa(MiUbicacionState state, MapaBloc mapaBloc) {
     if (!state.existeUbicacion) return Center(child: Text('Ubicando...'));
+
+    mapaBloc.add(OnNuevaUbicacion(state.ubicacion!));
+
     final cameraPosition = CameraPosition(target: state.ubicacion!, zoom: 15);
 
     return BlocBuilder<MapaBloc, MapaState>(
